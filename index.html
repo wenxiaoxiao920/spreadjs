@@ -24,7 +24,12 @@
   <script src="./gc.spread.sheets.designer.all.16.2.2.min.js" type="text/javascript"></script>
 
   <script type="text/javascript">
-   
+ 
+	     var designer = new GC.Spread.Sheets.Designer.Designer('ribbonHost');
+                   // 获取 Workbook 对象
+                   var workbook = designer.getWorkbook();
+            
+            // 获取当前活动的工作表
             var sheet = workbook.getActiveSheet();
 
             // 绑定 EditEnded 事件
