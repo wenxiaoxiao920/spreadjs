@@ -1,0 +1,107 @@
+<!doctype html>
+<html style="height:100%;font-size:14px;">
+
+<head>
+  <meta name="spreadjs culture" content="zh-cn" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="./gc.spread.sheets.excel2013white.16.2.2.css">
+  <link rel="stylesheet" type="text/css" href="./gc.spread.sheets.designer.16.2.2.min.css">
+  <script src="./gc.spread.sheets.all.16.2.2.min.js" type="text/javascript"></script>
+  <script src="./gc.spread.sheets.shapes.16.2.2.min.js" type="text/javascript"></script>
+  <script src="./gc.spread.sheets.charts.16.2.2.min.js" type="text/javascript"></script>
+  <script src="./gc.spread.sheets.print.16.2.2.min.js" type="text/javascript"></script>
+  <script src="./gc.spread.sheets.barcode.16.2.2.min.js" type="text/javascript"></script>
+  <script src="./gc.spread.sheets.pdf.16.2.2.min.js" type="text/javascript"></script>
+  <script src="./gc.spread.pivot.pivottables.16.2.2.min.js" type="text/javascript"></script>
+  <script src="./gc.spread.sheets.slicers.16.2.2.min.js" type="text/javascript"></script>
+  <script src="./gc.spread.sheets.tablesheet.16.2.2.min.js" type="text/javascript"></script>
+  <script src="./gc.spread.sheets.formulapanel.16.2.2.min.js" type="text/javascript"></script>
+  <script src="./gc.spread.sheets.io.16.2.2.min.js" type="text/javascript"></script>
+  <script src="./gc.spread.excelio.16.2.2.min.js" type="text/javascript"></script>
+  <script src="./gc.spread.sheets.resources.zh.16.2.2.min.js" type="text/javascript"></script>
+  <script src="./gc.spread.sheets.designer.resource.cn.16.2.2.min.js" type="text/javascript"></script>
+  <script src="./gc.spread.sheets.designer.all.16.2.2.min.js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+    GC.Spread.Sheets.LicenseKey = '829379956475539#B1fMWZ5RkRjBjWz9WZ9UEOu5UNxclRSVEeEJ6V7RlZ6UDN4BnT7A5V7sERqdHOsR4bnJUNRVnMmtScEtkWWJ6MalXQzczdi36VlZjY4EleWl7QTpUUGFEdyE4dvt6ZiFXRRd4YhZzZul5dxRXZ8dVTwNjcFJHbUB5NvdjcVRXMK9EUxlXZ6lVOxomU4BlWtljcz3keHFlV6ljSqtCUxFna4AXYmVGMVNDSkR6RXh6KJhFea9EOpZ4c72UWO54SWBlS9YmdENlQZd6TwYmbs9maLJWOycESGpkM85GSXNzY9gWNjhnb7oWawkzMCxGeZdzc0t6RvckI0IyUiwiIGNjMyITR7YjI0ICSiwyN4EjM9QDM5MTM0IicfJye35XX3JyVUNkWiojIDJCLiYTMuYHITpEIkFWZyB7UiojIOJyebpjIkJHUiwiI9AzM4UDMgUjMxEDNyAjMiojI4J7QiwiIx8CMuAjL7ITMiojIz5GRiwiI8+Y9sWY9QmZ0Jyp9Aqo9Re09m6L03Gr9+uZ9aKb9iojIh94QiwiI9MTN5cDN6UTO9czM9IDOiojIklkIs4XXbpjInxmZiwSZzxWYmpjIyNHZisnOiwmbBJye0ICRiwiI34TQiVHU8ZGeXVGRVhDai5kaptGc7FUVapnaxFnatVVTDZTdzYHUGdXMopkSy3SbIJ5ZuFzcnZWca3yakZjT4kGR4xGSapHdnhjblRTaB5UQntUWtJVd8ZkWv4WSZZDTZROZ'
+    window.onload = function () {
+	     var designer = new GC.Spread.Sheets.Designer.Designer('ribbonHost');
+                   // 获取 Workbook 对象
+                   var workbook = designer.getWorkbook();
+            
+            // 获取当前活动的工作表
+            var sheet = workbook.getActiveSheet();
+
+            // 绑定 EditEnded 事件
+            sheet.bind(GC.Spread.Sheets.Events.EditEnded, function(e, args) {
+                console.log('EditEnded event triggered for cell:', args.cell);
+            });
+
+            // 从LocalStorage加载数据
+            loadFromLocalStorage(workbook);
+
+            // 定时保存数据
+            setInterval(function() {
+                saveToLocalStorage(workbook);
+            }, 20000);
+        };
+
+        // 保存表格数据到LocalStorage
+        function saveToLocalStorage(workbook) {
+            var json = workbook.toJSON();
+            localStorage.setItem('spreadData', JSON.stringify(json));
+        }
+
+        // 从LocalStorage恢复数据
+        function loadFromLocalStorage(workbook) {
+            var savedData = localStorage.getItem('spreadData');
+            if (savedData) {
+                try {
+                    var data = JSON.parse(savedData);
+                    workbook.fromJSON(data);
+                } catch (e) {
+                    console.error('Error loading data from localStorage:', e);
+                }
+            }
+       };
+
+    </script>
+    <style>
+    .sample-tutorial {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    }
+    body {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    }
+    .container {
+    height: 100%;
+    }
+    .spreadSheet {
+    height: 100%;
+    }
+    #ribbonHost {
+    height: 100%;
+    }
+    .description {
+    margin: 10px;
+    width: 40%;
+    }
+    </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="spreadSheet">
+        <div id="ribbonHost"></div>
+    </div>
+  </div>
+</body>
+
+</html>
